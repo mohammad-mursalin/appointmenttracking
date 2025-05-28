@@ -1,5 +1,6 @@
 package com.example.appointmenttracking.security;
 
+import com.example.appointmenttracking.service.UserDetailsServiceImpl;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.appointmenttracking.security;
+package com.example.appointmenttracking.service;
 
 import com.example.appointmenttracking.model.Patient;
 import com.example.appointmenttracking.repository.PatientRepository;
