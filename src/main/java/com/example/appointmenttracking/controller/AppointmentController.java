@@ -7,6 +7,7 @@ import com.example.appointmenttracking.repository.DoctorRepository;
 import com.example.appointmenttracking.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.*;
@@ -76,6 +77,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}/status")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestParam AppointmentStatus status,
                                           @RequestParam(required = false) String delay) {
         return appointmentRepository.findById(id).map(appointment -> {
@@ -89,6 +91,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}/shift-back")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> shiftBackSerial(@PathVariable Long id, @RequestParam int newSerial) {
         return appointmentRepository.findById(id).map(appointment -> {
             appointment.setSerialNumber(newSerial);

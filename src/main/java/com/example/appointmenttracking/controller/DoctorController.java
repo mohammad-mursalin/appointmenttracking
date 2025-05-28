@@ -4,6 +4,7 @@ import com.example.appointmenttracking.model.Doctor;
 import com.example.appointmenttracking.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class DoctorController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doctor) {
         Doctor saved = doctorRepository.save(doctor);
@@ -34,6 +36,7 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}/status")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateAvailability(@PathVariable Long id, @RequestParam boolean available, @RequestParam(required = false) String remarks) {
         return doctorRepository.findById(id).map(doctor -> {
             doctor.setAvailable(available);
