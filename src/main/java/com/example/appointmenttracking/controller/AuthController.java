@@ -3,9 +3,9 @@ package com.example.appointmenttracking.controller;
 import com.example.appointmenttracking.dto.AuthRequest;
 import com.example.appointmenttracking.dto.AuthResponse;
 import com.example.appointmenttracking.dto.RegisterRequest;
-import com.example.appointmenttracking.model.User;
+import com.example.appointmenttracking.model.Patient;
 import com.example.appointmenttracking.model.Role;
-import com.example.appointmenttracking.repository.UserRepository;
+import com.example.appointmenttracking.repository.PatientRepository;
 import com.example.appointmenttracking.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,23 +22,23 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
-    private final UserRepository userRepository;
+    private final PatientRepository patientRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (patientRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().body("Email is already registered");
         }
 
-        User user = User.builder()
+        Patient patient = Patient.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole() != null ? request.getRole() : Role.ROLE_PATIENT)
                 .build();
 
-        userRepository.save(user);
+        patientRepository.save(patient);
 
         return ResponseEntity.ok("User registered successfully");
     }

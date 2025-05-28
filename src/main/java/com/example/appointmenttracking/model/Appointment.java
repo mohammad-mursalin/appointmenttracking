@@ -1,6 +1,5 @@
 package com.example.appointmenttracking.model;
 
-import com.example.appointmenttracking.model.AppointmentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,5 +33,5 @@ public class Appointment {
     private Doctor doctor;
 
     @ManyToOne
-    private User patient;
+    private Patient patient;
 }

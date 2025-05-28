@@ -4,7 +4,7 @@ import com.example.appointmenttracking.model.*;
 import com.example.appointmenttracking.model.AppointmentStatus;
 import com.example.appointmenttracking.repository.AppointmentRepository;
 import com.example.appointmenttracking.repository.DoctorRepository;
-import com.example.appointmenttracking.repository.UserRepository;
+import com.example.appointmenttracking.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class AppointmentController {
 
     private final AppointmentRepository appointmentRepository;
     private final DoctorRepository doctorRepository;
-    private final UserRepository userRepository;
+    private final PatientRepository patientRepository;
 
     @PostMapping("/book")
     public ResponseEntity<?> bookAppointment(@RequestParam Long doctorId,
@@ -27,11 +27,11 @@ public class AppointmentController {
                                              @RequestParam String date) {
 
         Optional<Doctor> doctorOpt = doctorRepository.findById(doctorId);
-        Optional<User> patientOpt = userRepository.findById(patientId);
+        Optional<Patient> patientOpt = patientRepository.findById(patientId);
         if (doctorOpt.isEmpty() || patientOpt.isEmpty()) return ResponseEntity.badRequest().build();
 
         Doctor doctor = doctorOpt.get();
-        User patient = patientOpt.get();
+        Patient patient = patientOpt.get();
         LocalDate appointmentDate = LocalDate.parse(date);
 
         List<Appointment> appointments = appointmentRepository.findByDoctorAndAppointmentDateOrderBySerialNumber(doctor, appointmentDate);
