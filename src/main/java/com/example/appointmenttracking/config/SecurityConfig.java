@@ -1,5 +1,7 @@
-package com.example.appointmenttracking.security;
+package com.example.appointmenttracking.config;
 
+import com.example.appointmenttracking.security.JwtFilter;
+import com.example.appointmenttracking.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.*;
