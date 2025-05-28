@@ -16,12 +16,10 @@ public class SerialChangeRequest {
     @ManyToOne
     private Appointment appointment;
 
+
     private Integer requestedSerialNumber;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private ChangeRequestStatus status;
 
-    public enum Status {
-        PENDING, APPROVED, REJECTED
-    }
 }
